@@ -3,12 +3,12 @@ import { Empresa } from '@/models/Empresa';
 import { Endereco } from '@/models/Endereco';
 import { Recibo } from '@/models/Recibo';
 
-const API_URL_RECIBOS = 'http://localhost:8080/recibos/';
+const API_URL_RECIBOS = 'http://localhost:8080/recibos';
 
 export default {
   async obterRecibos(): Promise<Recibo[]> {
     try {
-      const response = await fetch(`${API_URL_RECIBOS}json`);
+      const response = await fetch(`${API_URL_RECIBOS}/json`);
       if (!response.ok) {
         throw new Error('Erro ao obter os recibos');
       }
@@ -41,12 +41,34 @@ export default {
               recibo.cliente.endereco.cep
             )
           ),
-          recibo.totalRecebido
+          recibo.totalRecebido,
+          recibo.totalRecebidoFormatado
         );
       });
     } catch (error) {
       console.error('Erro ao obter os recibos:', error);
       throw error;
     }
-  }
+  }, 
+
+  async obterXMLRecibo(id: number): Promise<string> {
+    try {
+      const response = await fetch(`${API_URL_RECIBOS}/xml/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'text/plain', 
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Erro ao obter XML do recibo ${id}: ${response.statusText}`);
+      }
+  
+      console.log("ID:" + response.body)
+      return await response.text();
+    } catch (error) {
+      console.error(`Erro ao obter XML do recibo ${id}:`, error);
+      throw new Error(`Erro ao obter XML do recibo ${id}`);
+    }
+  }  
 };

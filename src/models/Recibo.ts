@@ -6,11 +6,13 @@ export class Recibo {
     empresa: Empresa;
     cliente: Cliente;
     totalRecebido: number;
+    totalRecebidoFormatado: string;
 
-    constructor(id: number, empresa: Empresa, cliente: Cliente, totalRecebido: number){
+    constructor(id: number, empresa: Empresa, cliente: Cliente, totalRecebido: number, totalRecebidoFormatado: string){
         this.id = id;
         this.empresa = empresa;
         this.cliente = cliente, 
         this.totalRecebido = totalRecebido;
+        this.totalRecebidoFormatado = totalRecebidoFormatado;
     }
 }
