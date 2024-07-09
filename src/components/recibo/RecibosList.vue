@@ -67,7 +67,6 @@ export default defineComponent({
       }
     };
 
-    // Carregar recibos ao montar o componente
     RecibosService.obterRecibos()
       .then(recibosObtidos => {
         recibos.value = recibosObtidos;
